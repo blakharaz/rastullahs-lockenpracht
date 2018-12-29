@@ -14,12 +14,6 @@
  *  http://www.jpaulmorrison.com/fbp/artistic2.htm.
  */
 
-%include std_vector.i
-
-namespace std {
-	%template(Ogrevec3Vector) vector<Ogre::Vector3 >;
-};
-
 namespace rl
 {
 	// Before first use

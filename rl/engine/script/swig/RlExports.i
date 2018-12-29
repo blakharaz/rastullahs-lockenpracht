@@ -1,6 +1,6 @@
 /* This source file is part of Rastullahs Lockenpracht.
  * Copyright (C) 2003-2008 Team Pantheon. http://www.team-pantheon.de
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the Clarified Artistic License.
  *
@@ -13,7 +13,7 @@
  *  along with this program; if not you can get it here
  *  http://www.jpaulmorrison.com/fbp/artistic2.htm.
  */
-#include "stdinc.h"	
+#include "stdinc.h"
 
 // Activate Directors and name the module RlScript
 %module(directors="1") RlScript
@@ -31,14 +31,14 @@
 #endif
 
 // Exporting the function for getting ruby instances
-VALUE RL_RubyInstanceFor(void* ptr) 
+VALUE RL_RubyInstanceFor(void* ptr)
 {
-	return SWIG_RubyInstanceFor(ptr);
+    return SWIG_RubyInstanceFor(ptr);
 }
 // Exporting the function for removing ruby instances
-void RL_RubyRemoveTracking(void* ptr) 
+void RL_RubyRemoveTracking(void* ptr)
 {
-	return SWIG_RubyRemoveTracking(ptr);
+    return SWIG_RubyRemoveTracking(ptr);
 }
 
 #include "FixRubyHeaders.h"
@@ -48,7 +48,7 @@ void RL_RubyRemoveTracking(void* ptr)
 
 %}
 
-%include "stl.i"
+//%include "stl.i"
 
 // Header includes
 %include "RlCommon.head.swig"
@@ -65,11 +65,6 @@ void RL_RubyRemoveTracking(void* ptr)
 %}
 %include "TypeMaps.i"
 
-
-
-
-
-
 // Kopie. Falls das nochmal irgendwohin kopiert werden muss,
 // In separate Datei auslagen.
 #if !defined(RL_LONGLONG)
@@ -80,22 +75,19 @@ void RL_RubyRemoveTracking(void* ptr)
 #   endif
 #endif
 
-
-
-
 // Handling of errors in director methods
-%feature("director:except") 
+%feature("director:except")
 {
-	RL_handleRubyError( error );
-	return Qnil;
+    RL_handleRubyError( error );
+    return Qnil;
 }
 
 %{
 // Error Handling for Ruby
 void RL_handleRubyError( VALUE error )
 {
-	std::stringstream stream;	
-	// get error class
+    std::stringstream stream;
+    // get error class
     VALUE klass = rb_class_path(CLASS_OF(error));
     stream << RSTRING(klass) << " (\"";
 
@@ -106,24 +98,24 @@ void RL_handleRubyError( VALUE error )
     // get backtrace
 //    if(!NIL_P(rb_errinfo))
 //    {
-//		stream << "Callstack: [ ";
+//        stream << "Callstack: [ ";
 //        VALUE ary = rb_funcall(
 //            rb_errinfo, rb_intern("backtrace"), 0);
 //        int c;
 //        for (c=RARRAY_LEN(ary); c>0; c--) {
 //            stream <<  RSTRING(RARRAY_PTR(ary)[c-1]);
 //            if( c > 1 )
-//				stream << ", ";
+//                stream << ", ";
 //        }
 //        stream << "]";
 //    }
 //    else
     {
-		stream << "[ No Callstack found ]";
+        stream << "[ No Callstack found ]";
     }
-     
+
     LOG_ERROR(rl::Logger::SCRIPT, stream.str() );
-    rl::WindowFactory::getSingleton().writeToConsole( stream.str() );  
+    rl::WindowFactory::getSingleton().writeToConsole( stream.str() );
 }
 %}
 
@@ -131,7 +123,7 @@ void RL_handleRubyError( VALUE error )
 
 // Converting C++ Exceptions to Ruby Exceptions
 %{
-enum RlExceptionClass 
+enum RlExceptionClass
 {
     RLEX_UNKNOWN,
     RLEX_CEGUI,
@@ -143,7 +135,7 @@ void throwRubyException(RlExceptionClass clazz, const char* exceptionMessage)
 {
     static VALUE ceguiException = rb_define_class("CeguiException", rb_eRuntimeError);
     static VALUE stdException = rb_define_class("StdException", rb_eRuntimeError);
-	static VALUE swigException = rb_define_class("SwigDirectorException", rb_eRuntimeError);
+    static VALUE swigException = rb_define_class("SwigDirectorException", rb_eRuntimeError);
     static VALUE unknownException = rb_define_class("UnknownException", rb_eRuntimeError);
 
     VALUE rubyClass;
@@ -168,17 +160,17 @@ void throwRubyException(RlExceptionClass clazz, const char* exceptionMessage)
 %}
 
 %exception %{
-  try 
+  try
   {
     $action
   }
-  catch (CEGUI::Exception& ce) 
+  catch (CEGUI::Exception& ce)
   {
     throwRubyException(RLEX_CEGUI, ce.getMessage().c_str());
   }
   catch (Swig::DirectorException& de)
   {
-	throwRubyException(RLEX_SWIG_DIRECTOR, de.getMessage().c_str());
+    throwRubyException(RLEX_SWIG_DIRECTOR, de.getMessage().c_str());
   }
   catch (std::exception& se)
   {
@@ -192,10 +184,10 @@ void throwRubyException(RlExceptionClass clazz, const char* exceptionMessage)
 
 
 
-// deaktiviere Warnung ueber unreferenzierte lokale Variable, 
+// deaktiviere Warnung ueber unreferenzierte lokale Variable,
 // da dies in allen erzeugten Exceptionhandlern auftritt
 %{
-#pragma warning( disable : 4101 )									
+#pragma warning( disable : 4101 )
 #include "FixRubyHeaders.h"
 %}
 
@@ -207,6 +199,6 @@ void throwRubyException(RlExceptionClass clazz, const char* exceptionMessage)
 %include "RlRules.swig"
 %include "RlAi.swig"
 %{
-    #include "FixRubyHeaders.h"
+   #include "FixRubyHeaders.h"
 %}
 %include "RlScript.swig"

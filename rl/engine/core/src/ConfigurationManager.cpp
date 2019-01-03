@@ -283,9 +283,9 @@ namespace rl
         addPlugin("RenderSystem_Direct3D9", mOgrePluginDirectory);
 #endif
         addPlugin("RenderSystem_GL", mOgrePluginDirectory);
+        addPlugin("Codec_FreeImage", mOgrePluginDirectory);
         addPlugin("Plugin_ParticleFX", mOgrePluginDirectory);
         addPlugin("Plugin_OctreeSceneManager", mOgrePluginDirectory);
-        addPlugin("Plugin_CgProgramManager", mOgrePluginDirectory);
     }
 
     void ConfigurationManager::loadModulesConfig()

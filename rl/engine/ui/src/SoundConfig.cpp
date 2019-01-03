@@ -17,7 +17,6 @@
 
 #include "SoundConfig.h"
 
-#include <boost/bind.hpp>
 #include <CEGUI/widgets/FrameWindow.h>
 #include <CEGUI/widgets/ListboxTextItem.h>
 
@@ -41,35 +40,30 @@ namespace rl
         , mCurrentConfig(NULL)
         , mDriverConfigs()
     {
-        getWindow()->subscribeEvent(FrameWindow::EventCloseClicked, boost::bind(&SoundConfig::handleClose, this));
-        getPushButton("SoundConfig/Cancel")
-            ->subscribeEvent(PushButton::EventMouseClick, boost::bind(&SoundConfig::handleClose, this));
+        getWindow()->subscribeEvent(FrameWindow::EventCloseClicked, &SoundConfig::handleClose, this);
+        getPushButton("Cancel")->subscribeEvent(PushButton::EventMouseClick, &SoundConfig::handleClose, this);
 
-        getWindow("SoundConfig/OK")->subscribeEvent(Window::EventMouseClick, boost::bind(&SoundConfig::handleOK, this));
+        getWindow("OK")->subscribeEvent(Window::EventMouseClick, &SoundConfig::handleOK, this);
 
-        mVolumeSound = getSlider("SoundConfig/VolumeSound");
+        mVolumeSound = getSlider("VolumeSound");
         mVolumeSound->setMaxValue(1.0);
         mVolumeSound->setCurrentValue(SoundManager::getSingleton().getActiveDriver()->getDefaultSoundVolume());
-        mVolumeSound->subscribeEvent(
-            Slider::EventValueChanged, boost::bind(&SoundConfig::handleVolumeSoundChanged, this));
+        mVolumeSound->subscribeEvent(Slider::EventValueChanged, &SoundConfig::handleVolumeSoundChanged, this);
 
-        mVolumeMusic = getSlider("SoundConfig/VolumeMusic");
+        mVolumeMusic = getSlider("VolumeMusic");
         mVolumeMusic->setMaxValue(1.0);
         mVolumeMusic->setCurrentValue(SoundManager::getSingleton().getActiveDriver()->getDefaultMusicVolume());
-        mVolumeMusic->subscribeEvent(
-            Slider::EventValueChanged, boost::bind(&SoundConfig::handleVolumeMusicChanged, this));
+        mVolumeMusic->subscribeEvent(Slider::EventValueChanged, &SoundConfig::handleVolumeMusicChanged, this);
 
-        mVolumeMaster = getSlider("SoundConfig/VolumeMaster");
+        mVolumeMaster = getSlider("VolumeMaster");
         mVolumeMaster->setMaxValue(1.0);
         mVolumeMaster->setCurrentValue(SoundManager::getSingleton().getActiveDriver()->getMasterVolume());
-        mVolumeMaster->subscribeEvent(
-            Slider::EventValueChanged, boost::bind(&SoundConfig::handleVolumeMasterChanged, this));
+        mVolumeMaster->subscribeEvent(Slider::EventValueChanged, &SoundConfig::handleVolumeMasterChanged, this);
 
-        mDriverBox = getCombobox("SoundConfig/Table");
-        mDriverBox->subscribeEvent(
-            Combobox::EventListSelectionAccepted, boost::bind(&SoundConfig::handleSelectDriver, this));
+        mDriverBox = getCombobox("Table");
+        mDriverBox->subscribeEvent(Combobox::EventListSelectionAccepted, &SoundConfig::handleSelectDriver, this);
 
-        mDriverConfig = getWindow("SoundConfig/DriverSettings");
+        mDriverConfig = getWindow("DriverSettings");
 
         centerWindow();
     }

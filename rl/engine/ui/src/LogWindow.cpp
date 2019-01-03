@@ -17,8 +17,6 @@
 
 #include "LogWindow.h"
 
-#include <boost/bind.hpp>
-
 #include "Logger.h"
 
 namespace rl
@@ -26,17 +24,16 @@ namespace rl
     LogWindow::LogWindow()
         : AbstractWindow("logwindow.xml", WIT_MOUSE_INPUT)
     {
-        mRastullahLog = getMultiLineEditbox("LogWindow/RastullahLog/Text");
-        mOgreLog = getMultiLineEditbox("LogWindow/OgreLog/Text");
-        mErrorLog = getMultiLineEditbox("LogWindow/ErrorLog/Text");
+        mRastullahLog = getMultiLineEditbox("TabPlane/RastullahLog/Text");
+        mOgreLog = getMultiLineEditbox("TabPlane/OgreLog/Text");
+        mErrorLog = getMultiLineEditbox("TabPlane/ErrorLog/Text");
 
-        getWindow("LogWindow/UpdateButton")
-            ->subscribeEvent(CEGUI::Window::EventMouseClick, boost::bind(&LogWindow::update, this));
+        getWindow("UpdateButton")->subscribeEvent(CEGUI::Window::EventMouseClick, &LogWindow::update, this);
         // bindDestroyWindowToXButton(); //conflicts with windowfactory
-        // bindDestroyWindowToClick(getWindow("LogWindow/CloseButton"));
+        // bindDestroyWindowToClick(getWindow("CloseButton"));
 
         bindHideWindowToXButton();
-        bindHideWindowToClick(getWindow("LogWindow/CloseButton"));
+        bindHideWindowToClick(getWindow("CloseButton"));
 
         centerWindow();
     }

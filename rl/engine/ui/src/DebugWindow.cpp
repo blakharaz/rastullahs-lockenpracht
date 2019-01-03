@@ -47,12 +47,12 @@ namespace rl
         , mCurrentPage(Ogre::BLANKSTRING)
         , mDebugPageName("General Informations")
     {
-        mPageCaption = getWindow("DebugWindow/PageCaption");
+        mPageCaption = getWindow("PageCaption");
         mPageCaption->moveToFront();
 
-        mPageText = getMultiLineEditbox("DebugWindow/PageText");
+        mPageText = getMultiLineEditbox("PageText");
 
-        mMessageText = getWindow("DebugWindow/MessageText");
+        mMessageText = getWindow("MessageText");
         mMessageText->moveToFront();
 
         bindDestroyWindowToXButton();

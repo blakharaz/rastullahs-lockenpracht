@@ -66,20 +66,20 @@ namespace rl
                 }
                 else
                 {
-                    MenuItem* grpItem = static_cast<MenuItem*>(windowMan->createWindow(
-                        "RastullahLook/MenuItem", getNamePrefix() + "IngameMenu/" + group->getName()));
+                    MenuItem* grpItem
+                        = static_cast<MenuItem*>(windowMan->createWindow("RastullahLook/MenuItem", group->getName()));
                     grpItem->setText(group->getName());
                     menu->addChild(grpItem);
 
-                    menuGrp = static_cast<PopupMenu*>(windowMan->createWindow(
-                        "RastullahLook/PopupMenu", getNamePrefix() + "IngameMenu/Menu" + group->getName()));
+                    menuGrp = static_cast<PopupMenu*>(
+                        windowMan->createWindow("RastullahLook/PopupMenu", "Menu" + group->getName()));
                     grpItem->addChild(menuGrp);
 
                     menuGroups[group->getName()] = menuGrp;
                 }
 
-                MenuItem* item = static_cast<MenuItem*>(windowMan->createWindow("RastullahLook/MenuItem",
-                    getNamePrefix() + "IngameMenu/" + group->getName() + "/" + action->getName()));
+                MenuItem* item
+                    = static_cast<MenuItem*>(windowMan->createWindow("RastullahLook/MenuItem", action->getName()));
                 item->setText(action->getDescription());
                 menuGrp->addChild(item);
 
@@ -104,6 +104,6 @@ namespace rl
 
     void InGameMenuWindow::update()
     {
-        createMenu(getMenu("InGameMenu/Menubar"));
+        createMenu(static_cast<CEGUI::MenuBase*>(getWindow()));
     }
 }

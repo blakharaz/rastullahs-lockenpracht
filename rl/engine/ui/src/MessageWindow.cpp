@@ -28,7 +28,7 @@ namespace rl
     MessageWindow::MessageWindow(const CeGuiString& title, const CeGuiString& text, const Buttons buttons)
         : AbstractWindow("messagewindow.xml", WIT_MOUSE_INPUT)
     {
-        mTextField = getWindow("MessageWindow/Text");
+        mTextField = getWindow("Text");
         centerWindow();
 
         setTitle(title);
@@ -71,7 +71,7 @@ namespace rl
         for (unsigned int btnCount = 1; btnCount <= 3; ++btnCount)
         {
             Window* buttonPanel = getWindow(
-                ("MessageWindow/ButtonPanel_" + CEGUI::PropertyHelper<unsigned int>::toString(btnCount)).c_str());
+                ("ButtonPanel/ButtonPanel_" + CEGUI::PropertyHelper<unsigned int>::toString(btnCount)).c_str());
 
             if (btnCount == texts.size())
             {

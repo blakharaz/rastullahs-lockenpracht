@@ -35,10 +35,10 @@ namespace rl
         : AbstractWindow("characterstatewindow.xml", WIT_NONE, false)
         , mCharacter(NULL)
     {
-        mLP = getProgressBar("CharacterStateWindow/LP");
-        mAP = getProgressBar("CharacterStateWindow/AP");
-        mAU = getProgressBar("CharacterStateWindow/AU");
-        mName = getWindow("CharacterStateWindow/Name");
+        mLP = getStatusBar("LP");
+        mAP = getStatusBar("AP");
+        mAU = getStatusBar("AU");
+        mName = getWindow("Name");
     }
 
     CharacterStateWindow::~CharacterStateWindow()

@@ -54,37 +54,37 @@ namespace rl
         // Connect actions to callbacks
         getWindow()->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, boost::bind(&GameSettings::onCancel, this));
 
-        mVideoRenderer = getCombobox("GameOptionsWindow/Video/Renderer");
-        mVideoResolution = getCombobox("GameOptionsWindow/Video/Resolution");
-        mVideoFullscreen = getCheckbox("GameOptionsWindow/Video/Fullscreen");
+        mVideoRenderer = getCombobox("Tabs/Video/Renderer");
+        mVideoResolution = getCombobox("Tabs/Video/Resolution");
+        mVideoFullscreen = getCheckbox("Tabs/Video/Fullscreen");
 
-        mVideoColorDepth32 = getRadioButton("GameOptionsWindow/Video/ColorDepth/32");
+        mVideoColorDepth32 = getRadioButton("Tabs/Video/ColorDepth 32");
         mVideoColorDepth32->setUserData(new Ogre::String("32"));
         mVideoColorDepth32->setGroupID(1);
-        mVideoColorDepth16 = getRadioButton("GameOptionsWindow/Video/ColorDepth/16");
+        mVideoColorDepth16 = getRadioButton("Tabs/Video/ColorDepth 16");
         mVideoColorDepth16->setUserData(new Ogre::String("16"));
         mVideoColorDepth16->setGroupID(1);
 
-        mVideoFsaa0 = getRadioButton("GameOptionsWindow/Video/FSAA/Off");
+        mVideoFsaa0 = getRadioButton("Tabs/Video/FSAA Off");
         mVideoFsaa0->setUserData(new Ogre::String("0"));
         mVideoFsaa0->setGroupID(2);
-        mVideoFsaa2 = getRadioButton("GameOptionsWindow/Video/FSAA/2x");
+        mVideoFsaa2 = getRadioButton("Tabs/Video/FSAA 2x");
         mVideoFsaa2->setUserData(new Ogre::String("2"));
         mVideoFsaa2->setGroupID(2);
-        mVideoFsaa4 = getRadioButton("GameOptionsWindow/Video/FSAA/4x");
+        mVideoFsaa4 = getRadioButton("Tabs/Video/FSAA 4x");
         mVideoFsaa4->setUserData(new Ogre::String("4"));
         mVideoFsaa4->setGroupID(2);
-        mVideoFsaa8 = getRadioButton("GameOptionsWindow/Video/FSAA/8x");
+        mVideoFsaa8 = getRadioButton("Tabs/Video/FSAA 8x");
         mVideoFsaa8->setUserData(new Ogre::String("8"));
         mVideoFsaa8->setGroupID(2);
 
-        mVideoRttModeFBO = getRadioButton("GameOptionsWindow/Video/RTT/FBO");
+        mVideoRttModeFBO = getRadioButton("Tabs/Video/RTT FBO");
         mVideoRttModeFBO->setUserData(new Ogre::String("FBO"));
         mVideoRttModeFBO->setGroupID(3);
-        mVideoRttModePBuffer = getRadioButton("GameOptionsWindow/Video/RTT/PBuffer");
+        mVideoRttModePBuffer = getRadioButton("Tabs/Video/RTT PBuffer");
         mVideoRttModePBuffer->setUserData(new Ogre::String("PBuffer"));
         mVideoRttModePBuffer->setGroupID(3);
-        mVideoRttModeCopy = getRadioButton("GameOptionsWindow/Video/RTT/Copy");
+        mVideoRttModeCopy = getRadioButton("Tabs/Video/RTT Copy");
         mVideoRttModeCopy->setUserData(new Ogre::String("Copy"));
         mVideoRttModeCopy->setGroupID(3);
 
@@ -102,9 +102,9 @@ namespace rl
         // Add component to list
         mSoundDriverConfigs.push_back(scc);
 
-        getCombobox("GameOptionsWindow/Sound/TableSoundDriver")
+        getCombobox("Sound/TableSoundDriver")
             ->addItem(new CEGUI::ListboxTextItem(
-                scc->getDriverName(), getCombobox("GameOptionsWindow/Sound/TableSoundDriver")->getItemCount(), scc));
+                scc->getDriverName(), getCombobox("Sound/TableSoundDriver")->getItemCount(), scc));
     }
 
     void GameSettings::registerRenderSystemConfig(RenderSystemConfigComponent* rcc)

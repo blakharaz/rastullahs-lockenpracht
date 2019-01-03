@@ -24,7 +24,7 @@ namespace rl
     SubtitleWindow::SubtitleWindow()
         : AbstractWindow("subtitlewindow.xml", WIT_NONE, false)
     {
-        mSubtitle = getMultiLineEditbox("SubtitleWindow/Text");
+        mSubtitle = getMultiLineEditbox("Text");
     }
 
     SubtitleWindow::~SubtitleWindow()

@@ -28,7 +28,7 @@ namespace rl
     CharacterSelectionWindow::CharacterSelectionWindow()
         : AbstractWindow("characterselectionwindow.xml", WIT_MOUSE_INPUT, false)
     {
-        mCharacterWindow = getWindow("CharacterSelectionWindow/Characters");
+        mCharacterWindow = getWindow();
         mCharacterAddedConnection = MessagePump::getSingleton().addMessageHandler<MessageType_PlayerCharAdded>(
             boost::bind(&CharacterSelectionWindow::update, this));
         mCharacterRemovedConnection = MessagePump::getSingleton().addMessageHandler<MessageType_PlayerCharRemoved>(
@@ -93,9 +93,9 @@ namespace rl
         , mCreature(NULL)
         , mTextName(NULL)
     {
-        mTextName = getWindow("CharacterSelectionWindow/Character/Name");
-        mPortrait = getWindow("CharacterSelectionWindow/Character/Picture");
-        mLP = getProgressBar("CharacterSelectionWindow/Character/LP");
+        mTextName = getWindow("Name");
+        mPortrait = getWindow("Picture");
+        mLP = getStatusBar("LP");
     }
 
     CharacterSelectionWindow::Element::~Element()

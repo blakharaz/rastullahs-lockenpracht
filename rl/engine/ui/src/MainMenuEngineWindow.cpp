@@ -28,7 +28,7 @@ namespace rl
     MainMenuEngineWindow::MainMenuEngineWindow()
         : AbstractWindow("mainmenuenginewindow.xml", WIT_NONE, false)
     {
-        getWindow("MainMenu/EngineVersion")
+        getWindow("EngineVersion")
             ->setText(CoreSubsystem::getSingleton().getEngineVersionString() + " ("
                 + StringConverter::toString(CoreSubsystem::getSingleton().getEngineBuildNumber()) + ")");
         mWindow->setAlwaysOnTop(false);

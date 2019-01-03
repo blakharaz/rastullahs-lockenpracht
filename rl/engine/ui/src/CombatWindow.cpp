@@ -28,7 +28,6 @@ using namespace Ogre;
 
 namespace rl
 {
-
     CombatWindow::CombatWindow()
         : AbstractWindow("combatwindow.xml", WIT_MOUSE_INPUT, false)
         , mButtons()
@@ -37,19 +36,19 @@ namespace rl
         , mButtonPadding(3)
     {
         int width = 0, height = 0;
-        Window* w = CEGUI::WindowManager::getSingleton().loadLayoutFromFile("buttons/attack.xml");
+        Window* w = CEGUI::WindowManager::getSingleton().loadLayoutFromFile("attack.xml");
         auto size = w->getPixelSize();
         height = std::max((int)size.d_height, height);
         width += (int)size.d_width + mButtonPadding;
         CEGUI::WindowManager::getSingleton().destroyWindow(w);
-        w = CEGUI::WindowManager::getSingleton().loadLayoutFromFile("buttons/parry.xml");
+        w = CEGUI::WindowManager::getSingleton().loadLayoutFromFile("parry.xml");
         size = w->getPixelSize();
         height = std::max((int)size.d_height, height);
         width += (int)size.d_width;
         CEGUI::WindowManager::getSingleton().destroyWindow(w);
         mSetSize = SetSize(width, height);
 
-        getWindow("CombatWindow/EndTurnButton")
+        getWindow("UserActionWindow/EndTurnButton")
             ->subscribeEvent(CEGUI::Window::EventMouseClick, &CombatWindow::endTurnButtonClicked, this);
     }
 
@@ -71,12 +70,12 @@ namespace rl
 
     int CombatWindow::addEnemyButtonSet()
     {
-        CeGuiString prefix = CeGuiString("_") + StringConverter::toString(mNextHandle).c_str();
+        //        CeGuiString prefix = CeGuiString("_") + StringConverter::toString(mNextHandle).c_str();
         ButtonVector buttons;
-        Window* attackButton = CEGUI::WindowManager::getSingleton().loadLayoutFromFile("buttons/attack.xml", prefix);
+        Window* attackButton = CEGUI::WindowManager::getSingleton().loadLayoutFromFile("attack.xml");
         mWindow->addChild(attackButton);
         buttons.push_back(attackButton);
-        Window* parryButton = CEGUI::WindowManager::getSingleton().loadLayoutFromFile("buttons/parry.xml", prefix);
+        Window* parryButton = CEGUI::WindowManager::getSingleton().loadLayoutFromFile("parry.xml");
         mWindow->addChild(parryButton);
         buttons.push_back(parryButton);
         mButtons.insert(std::make_pair(mNextHandle, buttons));
@@ -150,11 +149,11 @@ namespace rl
 
     void CombatWindow::setAttackedOpponentName(const CeGuiString& name)
     {
-        getWindow("CombatWindow/AttackedOpponent")->setText(name);
+        getWindow("UserActionWindow/AttackedOpponent")->setText(name);
     }
 
     void CombatWindow::setParriedOpponentName(const CeGuiString& name)
     {
-        getWindow("CombatWindow/ParriedOpponent")->setText(name);
+        getWindow("UserActionWindow/ParriedOpponent")->setText(name);
     }
 }

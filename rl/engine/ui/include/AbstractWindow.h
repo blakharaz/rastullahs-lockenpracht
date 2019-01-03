@@ -68,6 +68,7 @@ namespace rl
         CEGUI::Window* getWindow();
 
         CEGUI::Window* getWindow(const char* name, const char* requiredClass = NULL);
+        CEGUI::Window* getWindow(const char* name, const std::initializer_list<const char*>& classes);
         CEGUI::Editbox* getEditbox(const char* name);
         CEGUI::Listbox* getListbox(const char* name);
         CEGUI::MultiColumnList* getMultiColumnList(const char* name);
@@ -83,6 +84,9 @@ namespace rl
         CEGUI::Slider* getSlider(const char* name);
         CEGUI::TabControl* getTabControl(const char* name);
         CEGUI::ToggleButton* getCheckbox(const char* name);
+
+        // custom classes in look'n'feel
+        CEGUI::ProgressBar* getStatusBar(const char* name);
 
         int getWindowInputType();
 

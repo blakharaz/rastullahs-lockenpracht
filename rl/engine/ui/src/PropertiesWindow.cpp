@@ -42,21 +42,21 @@ namespace rl
         , mObject(object)
     {
         // Get access to the tab control
-        mTabPane = getTabControl("PropertiesWindow/PropertiesTabPane");
-        RlAssert(mTabPane != NULL, "PropertiesWindow/PropertiesTabPane is null");
+        mTabPane = getTabControl("PropertiesTabPane");
+        RlAssert(mTabPane != NULL, "PropertiesTabPane is null");
 
         // Get a access to the main Property table
-        mMainTable = getMultiColumnList("PropertiesWindow/PropertiesTabControl/MainTable");
-        RlAssert(mMainTable != NULL, "PropertiesWindow/PropertiesTabPane is null");
+        mMainTable = getMultiColumnList("PropertiesTabControl/MainTable");
+        RlAssert(mMainTable != NULL, "PropertiesTabPane is null");
 
-        mMainTable->addColumn("Key", 0, cegui_reldim(0.3));
-        mMainTable->addColumn("Type", 1, cegui_reldim(0.3));
-        mMainTable->addColumn("Value", 2, cegui_reldim(0.4));
+        mMainTable->addColumn("Key", 0, cegui_reldim(0.3F));
+        mMainTable->addColumn("Type", 1, cegui_reldim(0.3F));
+        mMainTable->addColumn("Value", 2, cegui_reldim(0.4F));
 
         centerWindow();
 
         bindDestroyWindowToXButton();
-        bindDestroyWindowToClick(getWindow("PropertiesWindow/CloseButton"));
+        bindDestroyWindowToClick(getWindow("CloseButton"));
 
         initialize(mObject);
     }
@@ -174,8 +174,8 @@ namespace rl
         GameObject* go = dynamic_cast<GameObject*>(object);
         if (go)
         {
-            getWindow("PropertiesWindow/HeaderSheet/ObjectName")->setText(go->getName());
-            getWindow("PropertiesWindow/HeaderSheet/ObjectDescription")->setText(go->getDescription());
+            getWindow("HeaderSheet/ObjectName")->setText(go->getName());
+            getWindow("HeaderSheet/ObjectDescription")->setText(go->getDescription());
         }
     }
 
@@ -470,7 +470,7 @@ namespace rl
         auto tabCount = mTabPane->getTabCount();
         CEGUI::MultiColumnList* newTable
             = static_cast<CEGUI::MultiColumnList*>(CEGUI::WindowManager::getSingleton().createWindow(
-                "RastullahLook/MultiColumnList", "PropertiesWindow/PropertiesTabControl/" + key));
+                "RastullahLook/MultiColumnList", "PropertiesTabControl/" + key));
 
         // Set table properties
         newTable->setText(key);

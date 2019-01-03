@@ -23,7 +23,6 @@
 
 #include <CEGUI/WindowManager.h>
 #include <CEGUI/widgets/ListboxTextItem.h>
-#include <boost/bind.hpp>
 
 #include "MainMenuLoadWindow.h"
 
@@ -49,8 +48,8 @@ namespace rl
         : AbstractWindow("mainmenuloadwindow.xml", WIT_MOUSE_INPUT | WIT_KEYBOARD_INPUT)
     {
         // Get a access to the savegame table
-        mSaveGameTable = getMultiColumnList("MainMenuLoadWindow/FileSheet/SaveGameTable");
-        RlAssert(mSaveGameTable != NULL, "MainMenuLoadWindow/FileSheet/SaveGameTable is null");
+        mSaveGameTable = getMultiColumnList("FileSheet/SaveGameTable");
+        RlAssert(mSaveGameTable != NULL, "FileSheet/SaveGameTable is null");
 
         mSaveGameTable->addColumn("Filename", 0, cegui_reldim(0.35F));
         mSaveGameTable->addColumn("Module", 1, cegui_reldim(0.3F));
@@ -58,18 +57,18 @@ namespace rl
 
         mSaveGameTable->setSelectionMode(MultiColumnList::RowSingle);
         mSaveGameTable->subscribeEvent(
-            MultiColumnList::EventSelectionChanged, boost::bind(&MainMenuLoadWindow::handleSelectSaveGame, this));
+            MultiColumnList::EventSelectionChanged, &MainMenuLoadWindow::handleSelectSaveGame, this);
 
         centerWindow();
 
-        getPushButton("MainMenuLoadWindow/ButtonSheet/LoadButton")
-            ->subscribeEvent(CEGUI::Window::EventMouseClick, boost::bind(&MainMenuLoadWindow::handleLoadEvent, this));
+        getPushButton("ButtonSheet/LoadButton")
+            ->subscribeEvent(CEGUI::Window::EventMouseClick, &MainMenuLoadWindow::handleLoadEvent, this);
 
-        getPushButton("MainMenuLoadWindow/ButtonSheet/DeleteButton")
-            ->subscribeEvent(CEGUI::Window::EventMouseClick, boost::bind(&MainMenuLoadWindow::handleDeleteEvent, this));
+        getPushButton("ButtonSheet/DeleteButton")
+            ->subscribeEvent(CEGUI::Window::EventMouseClick, &MainMenuLoadWindow::handleDeleteEvent, this);
 
         bindDestroyWindowToXButton();
-        bindDestroyWindowToClick(getWindow("MainMenuLoadWindow/ButtonSheet/CancelButton"));
+        bindDestroyWindowToClick(getWindow("ButtonSheet/CancelButton"));
 
         mSelectionColour = CEGUI::ListboxItem::DefaultSelectionColour;
         mSelectionImageset = "RastullahLook-Images";

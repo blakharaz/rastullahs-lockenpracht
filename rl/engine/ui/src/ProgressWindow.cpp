@@ -23,8 +23,8 @@ namespace rl
     ProgressWindow::ProgressWindow()
         : AbstractWindow("progresswindow.xml", WIT_NONE, false, true)
     {
-        mProgressBar = getProgressBar("ProgressWindow/ProgressBar");
-        mText = getWindow("ProgressWindow/Text");
+        mProgressBar = getStatusBar("ProgressBar");
+        mText = getWindow("Text");
         centerWindow();
     }
 

@@ -38,36 +38,36 @@ namespace rl
         : AbstractWindow("charactersheet.xml", WIT_MOUSE_INPUT)
         , mCharacter(NULL)
     {
-        mTalentTable = getMultiColumnList("CharacterSheet/TalentSheet/Table");
+        mTalentTable = getMultiColumnList("TabPlane/TalentSheet/Table");
         mTalentTable->addColumn("Talent", 0, cegui_reldim(0.5));
         mTalentTable->addColumn("Probe", 1, cegui_reldim(0.3));
         mTalentTable->addColumn("eBE", 2, cegui_reldim(0.1));
         mTalentTable->addColumn("TW", 3, cegui_reldim(0.1));
         mTalentTable->setUserSortControlEnabled(false);
 
-        mLE = getWindow("CharacterSheet/CharacterSheet/LE");
-        mAE = getWindow("CharacterSheet/CharacterSheet/AE");
-        mAP = getWindow("CharacterSheet/CharacterSheet/AP");
-        mName = getWindow("CharacterSheet/CharacterSheet/Name");
-        mRasse = getWindow("CharacterSheet/CharacterSheet/Rasse");
-        mKultur = getWindow("CharacterSheet/CharacterSheet/Kultur");
-        mProfession = getWindow("CharacterSheet/CharacterSheet/Profession");
-        mEffekte = getWindow("CharacterSheet/CharacterSheet/Effekte");
+        mLE = getWindow("TabPlane/CharacterSheet/LE");
+        mAE = getWindow("TabPlane/CharacterSheet/AE");
+        mAP = getWindow("TabPlane/CharacterSheet/AP");
+        mName = getWindow("TabPlane/CharacterSheet/Name");
+        mRasse = getWindow("TabPlane/CharacterSheet/Rasse");
+        mKultur = getWindow("TabPlane/CharacterSheet/Kultur");
+        mProfession = getWindow("TabPlane/CharacterSheet/Profession");
+        mEffekte = getWindow("TabPlane/CharacterSheet/Effekte");
 
         bindHideWindowToXButton();
 
         /*for (int i=0; i<EIGENSCHAFT_COUNT; i++)
             mEigenschaft[i] =
-                getWindow(("CharacterSheet/CharacterSheet/Eigenschaften/"+
+                getWindow(("TabPlane/CharacterSheet/Eigenschaften/"+
                     DsaManager::getSingleton().getEigenschaft(i)->getNameAbbreviation()).c_str());*/
-        mEigenschaft[0] = getWindow("CharacterSheet/CharacterSheet/Eigenschaften/MU");
-        mEigenschaft[1] = getWindow("CharacterSheet/CharacterSheet/Eigenschaften/KL");
-        mEigenschaft[2] = getWindow("CharacterSheet/CharacterSheet/Eigenschaften/IN");
-        mEigenschaft[3] = getWindow("CharacterSheet/CharacterSheet/Eigenschaften/CH");
-        mEigenschaft[4] = getWindow("CharacterSheet/CharacterSheet/Eigenschaften/FF");
-        mEigenschaft[5] = getWindow("CharacterSheet/CharacterSheet/Eigenschaften/GE");
-        mEigenschaft[6] = getWindow("CharacterSheet/CharacterSheet/Eigenschaften/KO");
-        mEigenschaft[7] = getWindow("CharacterSheet/CharacterSheet/Eigenschaften/KK");
+        mEigenschaft[0] = getWindow("TabPlane/CharacterSheet/Eigenschaften/MU");
+        mEigenschaft[1] = getWindow("TabPlane/CharacterSheet/Eigenschaften/KL");
+        mEigenschaft[2] = getWindow("TabPlane/CharacterSheet/Eigenschaften/IN");
+        mEigenschaft[3] = getWindow("TabPlane/CharacterSheet/Eigenschaften/CH");
+        mEigenschaft[4] = getWindow("TabPlane/CharacterSheet/Eigenschaften/FF");
+        mEigenschaft[5] = getWindow("TabPlane/CharacterSheet/Eigenschaften/GE");
+        mEigenschaft[6] = getWindow("TabPlane/CharacterSheet/Eigenschaften/KO");
+        mEigenschaft[7] = getWindow("TabPlane/CharacterSheet/Eigenschaften/KK");
     }
 
     CharacterSheetWindow::~CharacterSheetWindow()

@@ -98,7 +98,12 @@ namespace rl
         CEGUI::Window* window = NULL;
         try
         {
-            window = CEGUI::WindowManager::getSingleton().loadLayoutFromFile(xmlfile, prefix);
+            window = CEGUI::WindowManager::getSingleton().loadLayoutFromFile(xmlfile);
+            window->setName(prefix + window->getName());
+        }
+        catch (const CEGUI::Exception& ex)
+        {
+            Logger::getSingleton().log(Logger::LL_ERROR, Logger::UI, ex);
         }
         catch (...)
         {
@@ -157,18 +162,41 @@ namespace rl
 
     Window* AbstractWindow::getWindow(const char* name, const char* requiredClass)
     {
-        CEGUI::Window* wnd = getRoot()->getChild(mNamePrefix + name);
-
-        if (wnd == NULL)
-            Throw(rl::NullPointerException, "Window " + Ogre::String(name) + " is NULL");
-
-        if (requiredClass != NULL && wnd->getType() != requiredClass)
+        if (requiredClass)
         {
-            Throw(rl::NullPointerException,
-                "Window " + Ogre::String(name) + " has not the required class " + Ogre::String(requiredClass));
+            return getWindow(name, {requiredClass});
         }
 
-        return wnd;
+        return getWindow(name, {});
+    }
+
+    Window* AbstractWindow::getWindow(const char* name, const std::initializer_list<const char*>& classes)
+    {
+        CEGUI::Window* wnd = mWindow->getChild(name);
+
+        if (!wnd)
+        {
+            Throw(rl::NullPointerException, "Window " + Ogre::String(name) + " is NULL");
+        }
+
+        if (classes.size() == 0)
+        {
+            return wnd;
+        }
+
+        const auto& type = wnd->getType();
+        for (const auto& item : classes)
+        {
+            std::string required{item};
+            if (type.substr(type.length() - required.length()) == required)
+            {
+                return wnd;
+            }
+        }
+
+        Throw(rl::NullPointerException,
+            Ogre::StringUtil::format(
+                "Window %s has not the required class %s, but %s", name, *classes.begin(), wnd->getType().c_str()));
     }
 
     Editbox* AbstractWindow::getEditbox(const char* name)
@@ -178,7 +206,7 @@ namespace rl
 
     ToggleButton* AbstractWindow::getCheckbox(const char* name)
     {
-        return static_cast<ToggleButton*>(getWindow(name, "ToggleButton"));
+        return static_cast<ToggleButton*>(getWindow(name, "Checkbox"));
     }
 
     Listbox* AbstractWindow::getListbox(const char* name)
@@ -203,7 +231,7 @@ namespace rl
 
     MenuBase* AbstractWindow::getMenu(const char* name)
     {
-        return static_cast<MenuBase*>(getWindow(name, "MenuBase"));
+        return static_cast<MenuBase*>(getWindow(name, {"MenuBase", "PopupMenu"}));
     }
 
     MenuItem* AbstractWindow::getMenuItem(const char* name)
@@ -244,6 +272,11 @@ namespace rl
     TabControl* AbstractWindow::getTabControl(const char* name)
     {
         return static_cast<TabControl*>(getWindow(name, "TabControl"));
+    }
+
+    ProgressBar* AbstractWindow::getStatusBar(const char* name)
+    {
+        return static_cast<ProgressBar*>(getWindow(name, "StatusBar"));
     }
 
     const CeGuiString& AbstractWindow::getName() const

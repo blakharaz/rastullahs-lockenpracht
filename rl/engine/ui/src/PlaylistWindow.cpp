@@ -30,19 +30,17 @@ namespace rl
     PlaylistWindow::PlaylistWindow()
         : AbstractWindow("playlistwindow.xml", WIT_MOUSE_INPUT)
     {
-        mPlaylistTable = getMultiColumnList("PlaylistSheet/PlaylistSheet/Table");
+        mPlaylistTable = getMultiColumnList("PlaylistSheet/Table");
         mPlaylistTable->addColumn("Name", 0, cegui_reldim(0.5F));
         mPlaylistTable->addColumn("Dauer", 1, cegui_reldim(0.3F));
         mPlaylistTable->setUserSortControlEnabled(false);
 
         /* getWindow("PlaylistWindow")->subscribeEvent(
                 Window::EventMouseClick,
-                boost::bind(&MainMenuWindow::handleChooseModules, this)); */
+                &MainMenuWindow::handleChooseModules, this); */
 
-        getWindow("PlaylistSheet/ButtonSheet/Play")
-            ->subscribeEvent(Window::EventMouseClick, &PlaylistWindow::handlePlay, this);
-        getWindow("PlaylistSheet/ButtonSheet/Quit")
-            ->subscribeEvent(Window::EventMouseClick, &PlaylistWindow::handleQuit, this);
+        getWindow("ButtonSheet/Play")->subscribeEvent(Window::EventMouseClick, &PlaylistWindow::handlePlay, this);
+        getWindow("PlaylistSheet/Quit")->subscribeEvent(Window::EventMouseClick, &PlaylistWindow::handleQuit, this);
         bindDestroyWindowToClick(getWindow("PlaylistSheet"));
         bindDestroyWindowToXButton();
 

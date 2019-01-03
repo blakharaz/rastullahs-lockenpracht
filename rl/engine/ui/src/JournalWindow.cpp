@@ -45,23 +45,23 @@ namespace rl
     {
         bindHideWindowToXButton();
 
-        mQuests = getListbox("JournalWindow/Quests/QuestList");
+        mQuests = getListbox("Tabs/Quests/QuestList");
         mQuests->setMultiselectEnabled(false);
         mQuests->subscribeEvent(
             CEGUI::Listbox::EventSelectionChanged, boost::bind(&JournalWindow::updateQuestSelection, this));
 
-        mQuestTitle = getWindow("JournalWindow/Quests/QuestTitle");
-        mQuestState = getWindow("JournalWindow/Quests/QuestState");
-        mQuestDescription = getMultiLineEditbox("JournalWindow/Quests/QuestDescription");
+        mQuestTitle = getWindow("Tabs/Quests/QuestTitle");
+        mQuestState = getWindow("Tabs/Quests/QuestState");
+        mQuestDescription = getMultiLineEditbox("Tabs/Quests/QuestDescription");
         mQuestDescription->setReadOnly(true);
 
-        mJournalEntries = getListbox("JournalWindow/Journal/JournalEntryList");
+        mJournalEntries = getListbox("Tabs/Journal/JournalEntryList");
         mJournalEntries->setMultiselectEnabled(false);
         mJournalEntries->subscribeEvent(
             CEGUI::Listbox::EventSelectionChanged, boost::bind(&JournalWindow::updateJournalEntrySelection, this));
 
-        mJournalEntryTitle = getWindow("JournalWindow/Journal/JournalEntryTitle");
-        mJournalEntryText = getMultiLineEditbox("JournalWindow/Journal/JournalEntryText");
+        mJournalEntryTitle = getWindow("Tabs/Journal/JournalEntryTitle");
+        mJournalEntryText = getMultiLineEditbox("Tabs/Journal/JournalEntryText");
         mJournalEntryText->setReadOnly(true);
 
         mSelectionColour = CEGUI::ListboxItem::DefaultSelectionColour;

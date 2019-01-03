@@ -133,7 +133,7 @@ namespace rl
         ///@todo Hier sollte was Lookunabhaengiges rein!!! FIXME TODO BUG!
         //        System::getSingleton().setDefaultMouseCursor("RastullahLook-Images", "MouseArrow");
         LOG_MESSAGE2(Logger::UI, "Mouse arrow loaded.", "UiSubsystem::initializeUiSubsystem");
-        Window* sheet = CEGUI::WindowManager::getSingleton().createWindow("DefaultGUISheet", CEGUI_ROOT);
+        Window* sheet = CEGUI::WindowManager::getSingleton().createWindow("DefaultWindow", CEGUI_ROOT);
         LOG_MESSAGE2(Logger::UI, "CEGUI Root Window created.", "UiSubsystem::initializeUiSubsystem");
         sheet->setSize(CEGUI::USize(CEGUI::UDim(0, CoreSubsystem::getSingleton().getRenderWindow()->getWidth()),
             CEGUI::UDim(0, CoreSubsystem::getSingleton().getRenderWindow()->getHeight())));

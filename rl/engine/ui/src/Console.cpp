@@ -41,9 +41,9 @@ namespace rl
     {
         using namespace CEGUI;
 
-        mDisplay = getListbox("Console/Display");
+        mDisplay = getListbox("Display");
         mDisplay->setShowVertScrollbar(true);
-        mCommandLine = getEditbox("Console/Inputbox");
+        mCommandLine = getEditbox("Inputbox");
 
         mWindow->subscribeEvent(FrameWindow::EventKeyDown, &Console::handleKeyDown, this);
         mCommandLine->subscribeEvent(Editbox::EventKeyDown, &Console::handleKeyDown, this);

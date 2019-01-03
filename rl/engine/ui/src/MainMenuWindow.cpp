@@ -38,17 +38,11 @@ namespace rl
         , mActiveModule(NULL)
         , mEngineWindow(enginewindow)
     {
-        getWindow("MainMenu/Game/Start")
-            ->subscribeEvent(MenuItem::EventClicked, boost::bind(&MainMenuWindow::handleStart, this));
-
-        getWindow("MainMenu/Game/Load")
-            ->subscribeEvent(MenuItem::EventClicked, boost::bind(&MainMenuWindow::handleLoad, this));
-
-        getWindow("MainMenu/Game/Quit")
-            ->subscribeEvent(MenuItem::EventClicked, boost::bind(&MainMenuWindow::handleQuit, this));
-
-        getWindow("MainMenu/Options")
-            ->subscribeEvent(MenuItem::EventClicked, boost::bind(&MainMenuWindow::handleSettings, this));
+        getWindow("Menubar/Game/Menu/Start")
+            ->subscribeEvent(MenuItem::EventClicked, &MainMenuWindow::handleStart, this);
+        getWindow("Menubar/Game/Menu/Load")->subscribeEvent(MenuItem::EventClicked, &MainMenuWindow::handleLoad, this);
+        getWindow("Menubar/Game/Menu/Quit")->subscribeEvent(MenuItem::EventClicked, &MainMenuWindow::handleQuit, this);
+        getWindow("Menubar/Options")->subscribeEvent(MenuItem::EventClicked, &MainMenuWindow::handleSettings, this);
 
         fillModules();
 
@@ -62,7 +56,7 @@ namespace rl
 
     void MainMenuWindow::fillModules()
     {
-        MenuBase* modulesMenu = getMenu("MainMenu/Modules/Menu");
+        MenuBase* modulesMenu = getMenu("Menubar/Modules/Menu");
 
         ModuleMap modules = CoreSubsystem::getSingleton().getAllModules();
         mActiveModule = CoreSubsystem::getSingleton().getActiveAdventureModule();
@@ -77,7 +71,7 @@ namespace rl
                     mActiveModule = mod;
 
                 MenuItem* it = static_cast<MenuItem*>(CEGUI::WindowManager::getSingleton().createWindow(
-                    "RastullahLook/MenuItem", getNamePrefix() + "MainMenu/Modules/" + mod->getId()));
+                    "RastullahLook/MenuItem", getNamePrefix() + "Modules/" + mod->getId()));
 
                 if (mod == mActiveModule)
                     it->setText(mod->getName() + " *");
@@ -93,7 +87,7 @@ namespace rl
 
     bool MainMenuWindow::handleChooseModule(MenuItem* it, ContentModule* module)
     {
-        MenuBase* modulesMenu = getMenu("MainMenu/Modules/Menu");
+        MenuBase* modulesMenu = getMenu("Modules/Menu");
 
         ItemEntry* itOld = NULL;
         CeGuiString activeName;

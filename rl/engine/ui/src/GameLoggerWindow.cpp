@@ -35,7 +35,7 @@ namespace rl
         , mLogEntryAddedConnection()
         , mLog(NULL)
     {
-        mLog = getListbox("GameLogger/Log");
+        mLog = getListbox("Log");
         mLogEntryAddedConnection = MessagePump::getSingleton().addMessageHandler<MessageType_GameEventLog_EventAdded>(
             boost::bind(&GameLoggerWindow::onLogEntryAdded, this, _1, _2));
     }

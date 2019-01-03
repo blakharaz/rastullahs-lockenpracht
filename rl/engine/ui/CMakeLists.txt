@@ -16,6 +16,7 @@ SET(RlUi_LIB_SRCS
 src/AboutWindow.cpp
 src/ActionChoiceWindow.cpp
 src/AbstractWindow.cpp
+src/CeGuiLogForwarder.cpp
 src/CharacterSelectionWindow.cpp
 src/CharacterSheetWindow.cpp
 src/CharacterStateWindow.cpp

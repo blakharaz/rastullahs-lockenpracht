@@ -29,6 +29,7 @@
 #include "Actor.h"
 #include "AiMessages.h"
 #include "CeGuiHelper.h"
+#include "CeGuiLogForwarder.h"
 #include "ConfigurationManager.h"
 #include "ControlState.h"
 #include "CoreMessages.h"
@@ -72,6 +73,7 @@ namespace rl
 
     UiSubsystem::UiSubsystem()
         : mCharacter(NULL)
+        , mCeGuiLogForwarder(std::make_unique<CeGuiLogForwarder>(Logger::getSingleton()))
         , mInputManager(NULL)
         , mWindowFactory(NULL)
         , mWindowManager(NULL)

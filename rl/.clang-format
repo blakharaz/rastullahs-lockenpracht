@@ -4,7 +4,9 @@ BasedOnStyle: WebKit
 AllowShortFunctionsOnASingleLine: None
 BreakBeforeBraces: Allman
 ColumnLimit: '120'
+Cpp11BracedListStyle: true
 NamespaceIndentation: All
+Standard: Cpp11
 TabWidth: '4'
 UseTab: Never
 

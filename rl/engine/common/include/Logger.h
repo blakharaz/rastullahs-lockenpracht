@@ -13,8 +13,7 @@
  *  along with this program; if not you can get it here
  *  http://www.jpaulmorrison.com/fbp/artistic2.htm.
  */
-#ifndef __LOGGER_H__
-#define __LOGGER_H__
+#pragma once
 
 #include "CommonPrerequisites.h"
 
@@ -64,9 +63,11 @@ namespace rl
             const Ogre::String& ident = "");
 #endif
 
+        void log(const LogLevel level, const Ogre::String& component, const CEGUI::Exception& ex,
+            const Ogre::String& ident = "");
+
         void setLogDetail(const LogLevel level);
         const LogLevel& getLogDetail();
-        const CEGUI::LoggingLevel getCeGuiLogDetail() const;
 
         bool isErrorPresent() const;
         void resetErrorState();
@@ -113,5 +114,3 @@ namespace rl
 #define LOG_CRITICAL(component, msg) RL_LOG(rl::Logger::LL_CRITICAL, component, msg)
 #define LOG_CRITICAL2(component, msg, ident) RL_LOG2(rl::Logger::LL_CRITICAL, component, msg, ident)
 #define LOG_CRITICAL_SHORT(msg) RL_LOG_SHORT(rl::Logger::LL_CRITICAL, msg)
-
-#endif //__LOGGER_H__

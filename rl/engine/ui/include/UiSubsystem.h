@@ -33,8 +33,8 @@ namespace CEGUI
 
 namespace rl
 {
-
     class Creature;
+    class CeGuiLogForwarder;
     class GameActor;
     class GameObject;
     class InputManager;
@@ -73,6 +73,7 @@ namespace rl
         bool onAllPlayerCharactersDied();
 
         // Singletons
+        std::unique_ptr<CeGuiLogForwarder> mCeGuiLogForwarder;
         InputManager* mInputManager;
         WindowFactory* mWindowFactory;
         WindowManager* mWindowManager;

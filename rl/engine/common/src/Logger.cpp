@@ -21,6 +21,8 @@
 #include <boost/filesystem/exception.hpp>
 #include <boost/filesystem/operations.hpp>
 
+#include <CEGUI/Exceptions.h>
+
 namespace fs = boost::filesystem;
 
 using Ogre::LogManager;
@@ -94,6 +96,15 @@ namespace rl
 #endif
 
     void Logger::log(
+        const LogLevel level, const Ogre::String& component, const CEGUI::Exception& ex, const Ogre::String& ident)
+    {
+        log(level, component,
+            Ogre::StringUtil::format("CEGUI Exception %s in %s:%d\n%s\n%s", ex.getName().c_str(),
+                ex.getFileName().c_str(), ex.getLine(), ex.getFunctionName().c_str(), ex.getMessage().c_str()),
+            ident);
+    }
+
+    void Logger::log(
         const Logger::LogLevel level, const Ogre::String& component, const char* message, const Ogre::String& ident)
     {
         if (ident.length() == 0)
@@ -127,18 +138,6 @@ namespace rl
     const Logger::LogLevel& Logger::getLogDetail()
     {
         return mLogLevel;
-    }
-
-    const CEGUI::LoggingLevel Logger::getCeGuiLogDetail() const
-    {
-        if (mLogLevel > Logger::LL_ERROR)
-            return CEGUI::Errors;
-        else if (mLogLevel > Logger::LL_WARNING)
-            return CEGUI::Standard;
-        else
-            return CEGUI::Insane;
-
-        return CEGUI::Errors;
     }
 
     const Ogre::LoggingLevel Logger::getOgreLogDetail() const

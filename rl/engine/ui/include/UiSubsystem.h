@@ -71,6 +71,7 @@ namespace rl
         ///@todo function feels misplaced here,
         bool onActiveCharacterChanged(Creature* oldActive, Creature* newActive);
         bool onAllPlayerCharactersDied();
+        void addResourceLocations();
 
         // Singletons
         std::unique_ptr<CeGuiLogForwarder> mCeGuiLogForwarder;

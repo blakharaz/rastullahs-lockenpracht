@@ -377,7 +377,7 @@ namespace rl
 
     Ogre::String ConfigurationManager::getKeymap() const
     {
-        return Ogre::String("config/keymap-german.xml");
+        return Ogre::String("keymap-german.xml");
     }
 
     void ConfigurationManager::setExecutable(const Ogre::String& path)

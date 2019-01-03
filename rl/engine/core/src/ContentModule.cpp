@@ -130,12 +130,6 @@ namespace rl
             addSearchPath(moduleDir + "/sound/" + *it, resourceGroup);
         }
 
-        addSearchPath(moduleDir + "/gui", resourceGroup);
-        addSearchPath(moduleDir + "/gui/fonts", resourceGroup);
-        addSearchPath(moduleDir + "/gui/imagesets", resourceGroup);
-        addSearchPath(moduleDir + "/gui/schemes", resourceGroup);
-        addSearchPath(moduleDir + "/gui/windows", resourceGroup);
-        addSearchPath(moduleDir + "/gui/windows/buttons", resourceGroup);
         addSearchPath(moduleDir + "/dialogs", resourceGroup);
         addSearchPath(moduleDir + "/quests", resourceGroup);
 

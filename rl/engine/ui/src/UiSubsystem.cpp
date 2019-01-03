@@ -114,20 +114,19 @@ namespace rl
         using namespace CEGUI;
 
         LOG_MESSAGE2(Logger::UI, "Initialisiere UI", "UiSubsystem::initializeUiSubsystem");
-        World* world = CoreSubsystem::getSingleton().getWorld();
-        SceneManager* sceneMgr = world->getSceneManager();
-
-        //        CEGUI::System::setDefaultXMLParserName("XercesParser");
 
         LOG_MESSAGE2(Logger::UI, "Initializing CEGUI Renderer.", "UiSubsystem::initializeUiSubsystem");
         mGuiRenderer = &OgreRenderer::create(*CoreSubsystem::getSingleton().getRenderWindow());
+        mGuiRenderer->setRenderingEnabled(false);
 
         LOG_MESSAGE2(Logger::UI, "Initializing CEGUI System.", "UiSubsystem::initializeUiSubsystem");
+        addResourceLocations();
         mGuiResourceProvider = &mGuiRenderer->createOgreResourceProvider();
+        mGuiResourceProvider->setDefaultResourceGroup("gui");
 
         mGuiSystem = &System::create(*mGuiRenderer, mGuiResourceProvider, nullptr, nullptr, nullptr, "cegui.config",
             ConfigurationManager::getSingleton().getCeguiLogFile());
-        CEGUI::Logger::getSingleton().setLoggingLevel(rl::Logger::getSingleton().getCeGuiLogDetail());
+        CEGUI::Logger::getSingleton().setLoggingLevel(CEGUI::LoggingLevel::Informative);
         LOG_MESSAGE2(Logger::UI, "CEGUI System initialized.", "UiSubsystem::initializeUiSubsystem");
 
         // load scheme and set up defaults
@@ -157,6 +156,23 @@ namespace rl
 
         mWindowFactory->initialize();
         LOG_MESSAGE2(Logger::UI, "WindowFactory initialized.", "UiSubsystem::initializeUiSubsystem");
+
+        mGuiRenderer->setRenderingEnabled(true);
+    }
+
+    void UiSubsystem::addResourceLocations()
+    {
+        const Ogre::String group = "gui";
+        const Ogre::String rootDir = ConfigurationManager::getSingleton().getModulesRootDirectory() + "/gui";
+
+        Ogre::ResourceGroupManager::getSingleton().addResourceLocation(rootDir, "FileSystem", group);
+        Ogre::ResourceGroupManager::getSingleton().addResourceLocation(rootDir + "/config", "FileSystem", group);
+        Ogre::ResourceGroupManager::getSingleton().addResourceLocation(rootDir + "/fonts", "FileSystem", group);
+        Ogre::ResourceGroupManager::getSingleton().addResourceLocation(rootDir + "/imagesets", "FileSystem", group);
+        Ogre::ResourceGroupManager::getSingleton().addResourceLocation(rootDir + "/schemes", "FileSystem", group);
+        Ogre::ResourceGroupManager::getSingleton().addResourceLocation(rootDir + "/windows", "FileSystem", group);
+        Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
+            rootDir + "/windows/buttons", "FileSystem", group);
     }
 
     CEGUI::OgreRenderer* UiSubsystem::getGUIRenderer()

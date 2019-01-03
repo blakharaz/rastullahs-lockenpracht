@@ -570,7 +570,7 @@ namespace rl
     {
         using std::make_pair;
 
-        tinyxml2::XMLDocument* doc = loadDocument(filename);
+        tinyxml2::XMLDocument* doc = loadDocument(filename, "gui");
         tinyxml2::XMLElement* dataDocumentContent = doc->RootElement();
 
         XmlElementList keymaps = getElementsByTagName(dataDocumentContent, "Key");

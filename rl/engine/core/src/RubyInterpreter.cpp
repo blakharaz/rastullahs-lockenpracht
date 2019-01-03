@@ -56,18 +56,12 @@ namespace rl
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
         addSearchPath(ConfigurationManager::getSingleton().getExecutablePath() + "/../Resources");
+#elif OGRE_PLATFORM == OGRE_PLATFORM_LINUX
+        addSearchPath(ConfigurationManager::getSingleton().getExecutablePath());
+        addSearchPath(ConfigurationManager::getSingleton().getExecutablePath() + "/../lib");
+        addSearchPath("/usr/local/lib");
+        addSearchPath("/usr/lib");
 #endif
-
-        // Skript-Verzeichnisse der  Dateien duerfen auch in /script liegen
-        ModuleMap modules = CoreSubsystem::getSingleton().getAllModules();
-        for (ModuleMap::iterator iter = modules.begin(); iter != modules.end(); iter++)
-        {
-            ContentModule* mod = (*iter).second;
-            // wir suchen die Scripte im modules Verzeichnis relativ zum ModuleRootPath!
-            addSearchPath(mod->getDirectory() + "/conf");
-            addSearchPath(mod->getDirectory() + "/scripts");
-            addSearchPath(mod->getDirectory() + "/scripts/maps");
-        }
 
         ruby_init_loadpath();
         // Skriptname

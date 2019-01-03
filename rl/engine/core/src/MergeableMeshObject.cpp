@@ -55,7 +55,8 @@ namespace rl
 
         if (mCombinedMeshName != newMeshName)
         {
-            MeshPtr newMesh = MeshManager::getSingleton().getByName(newMeshName);
+            MeshPtr newMesh = MeshManager::getSingleton().getByName(
+                newMeshName, ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME);
 
             if (!newMesh)
             {
@@ -63,7 +64,8 @@ namespace rl
                 for (MeshPartMap::const_iterator it = mMeshes.begin(); it != mMeshes.end(); ++it)
                 {
                     String curMeshfile = (*it).second;
-                    MeshPtr meshToAdd = MeshManager::getSingleton().getByName(curMeshfile);
+                    MeshPtr meshToAdd = MeshManager::getSingleton().getByName(
+                        curMeshfile, ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME);
 
                     if (meshToAdd)
                     {
@@ -83,7 +85,7 @@ namespace rl
                         LOG_ERROR(Logger::CORE, "Mesh '" + curMeshfile + "' could not be found for merging.");
                     }
                 }
-                newMesh = mm.merge(newMeshName);
+                newMesh = mm.merge(newMeshName, mBaseMesh->getGroup());
             }
 
             switchTo(newMesh);

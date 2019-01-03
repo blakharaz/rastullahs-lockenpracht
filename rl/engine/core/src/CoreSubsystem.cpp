@@ -464,11 +464,13 @@ namespace rl
         }
 
         LOG_MESSAGE(Logger::CORE, "Start initializing module " + module->getName());
-        module->initializeTextures();
         module->initialize();
 
-        ResourceGroupManager::getSingleton().initialiseResourceGroup(module->getId());
-        module->precreateMeshes();
+        if (!module->isCommon())
+        {
+            ResourceGroupManager::getSingleton().initialiseResourceGroup(module->getId());
+            module->precreateMeshes();
+        }
 
         if (module->isCommon())
         {
@@ -508,7 +510,7 @@ namespace rl
     long CoreSubsystem::getEngineBuildNumber() const
     {
         static const Ogre::String sMonths[]
-            = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+            = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
         Ogre::String dateStr = Ogre::String(__DATE__);
         Ogre::String monthStr = dateStr.substr(0, 3);

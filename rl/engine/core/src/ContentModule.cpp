@@ -82,10 +82,8 @@ namespace rl
         return mCommon;
     }
 
-    void ContentModule::initializeTextures() const
+    void ContentModule::initializeTextures(const Ogre::String& resourceGroup) const
     {
-        Ogre::String resourceGroup = getId();
-
         StringVector texLocations = getTextureLocations();
         for (StringVector::iterator iter = texLocations.begin(); iter != texLocations.end(); iter++)
         {
@@ -109,11 +107,41 @@ namespace rl
     {
         SaveGameManager::getSingleton().registerSaveGameData(this);
 
-        Ogre::String moduleDir = getDirectory();
+        const auto& id = getId();
 
-        Ogre::String resourceGroup = getId();
+        if (isCommon())
+        {
+            //    initializeForGroup(Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+        }
+        else
+        {
+            initializeForGroup(id);
+            for (const auto& dependency : getDependencies())
+            {
+                auto module = CoreSubsystem::getSingleton().getModule(dependency);
+                if (module)
+                {
+                    module->initializeForGroup(id);
+                }
+            }
+        }
 
-        addSearchPath(moduleDir + "/conf", resourceGroup);
+        addRubySearchPaths();
+
+        mLoaded = true;
+    }
+
+    void ContentModule::initializeForGroup(const Ogre::String& resourceGroup)
+    {
+        initializeTextures(resourceGroup);
+        addModuleSearchPaths(resourceGroup);
+    }
+
+    void ContentModule::addModuleSearchPaths(const Ogre::String& resourceGroup)
+    {
+        auto moduleDir = getDirectory();
+
+        addSearchPath(moduleDir, resourceGroup);
         addSearchPath(moduleDir + "/dsa", resourceGroup);
         addSearchPath(moduleDir + "/maps", resourceGroup);
         addSearchPath(moduleDir + "/models", resourceGroup);
@@ -132,6 +160,11 @@ namespace rl
 
         addSearchPath(moduleDir + "/dialogs", resourceGroup);
         addSearchPath(moduleDir + "/quests", resourceGroup);
+    }
+
+    void ContentModule::addRubySearchPaths()
+    {
+        auto moduleDir = getDirectory();
 
         RubyInterpreter* interpreter = CoreSubsystem::getSingleton().getRubyInterpreter();
         if (interpreter != NULL)
@@ -139,8 +172,6 @@ namespace rl
             interpreter->addSearchPath(moduleDir + "/scripts");
             interpreter->addSearchPath(moduleDir + "/scripts/maps");
         }
-
-        mLoaded = true;
     }
 
     void ContentModule::addSearchPath(const Ogre::String& path, const Ogre::String& resourceGroup) const

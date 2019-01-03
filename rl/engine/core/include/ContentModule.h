@@ -44,7 +44,7 @@ namespace rl
 
         static const Ogre::String getInitFile(const Ogre::String& moduleId);
         void initialize();
-        void initializeTextures() const;
+        void initializeForGroup(const Ogre::String& resourceGroup);
         void precreateMeshes() const;
         void loadContent();
         void unload();
@@ -64,7 +64,10 @@ namespace rl
         ContentLoaderVector mContentLoaders;
 
         static const Ogre::String getDirectory(const Ogre::String& moduleId);
+        void addModuleSearchPaths(const Ogre::String& resourceGroup);
+        void addRubySearchPaths();
         void addSearchPath(const Ogre::String& path, const Ogre::String& resourceGroup) const;
+        void initializeTextures(const Ogre::String& resourceGroup) const;
 
         const Ogre::String mId;
         const CeGuiString mName;

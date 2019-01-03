@@ -15,6 +15,7 @@
  */
 #include "stdinc.h"
 
+
 // Activate Directors and name the module RlScript
 %module(directors="1") RlScript
 /* Tell SWIG to keep track of mappings between C/C++ structs/classes. */
@@ -89,27 +90,31 @@ void RL_handleRubyError( VALUE error )
     std::stringstream stream;
     // get error class
     VALUE klass = rb_class_path(CLASS_OF(error));
-    stream << RSTRING(klass) << " (\"";
+    stream << rb_string_value_cstr(&klass) << " (\"";
 
     // get error message
     VALUE message = rb_obj_as_string(error);
-    stream << RSTRING(message) << "\"), ";
+    stream << rb_string_value_cstr(&message) << "\"), ";
+
+    VALUE exception = rb_errinfo();
+    rb_set_errinfo(Qnil);
 
     // get backtrace
-//    if(!NIL_P(rb_errinfo))
-//    {
-//        stream << "Callstack: [ ";
-//        VALUE ary = rb_funcall(
-//            rb_errinfo, rb_intern("backtrace"), 0);
-//        int c;
-//        for (c=RARRAY_LEN(ary); c>0; c--) {
-//            stream <<  RSTRING(RARRAY_PTR(ary)[c-1]);
-//            if( c > 1 )
-//                stream << ", ";
-//        }
-//        stream << "]";
-//    }
-//    else
+    if(!NIL_P(exception))
+    {
+        stream << "Callstack: [ ";
+        VALUE ary = rb_funcall(exception, rb_intern("backtrace"), 0);
+
+        for (auto c = RARRAY_LEN(ary) - 1; c >= 0; c--) {
+            VALUE item = RARRAY_PTR(ary)[c];
+            stream << rb_string_value_cstr(&item);
+            if (c > 0) {
+                stream << ", ";
+            }
+        }
+        stream << "]";
+    }
+    else
     {
         stream << "[ No Callstack found ]";
     }

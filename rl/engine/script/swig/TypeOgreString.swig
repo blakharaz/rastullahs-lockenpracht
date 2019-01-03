@@ -14,6 +14,8 @@
  *  http://www.jpaulmorrison.com/fbp/artistic2.htm.
  */
 
+%include std_string.i
+
 %apply std::string { Ogre::String };  
 %apply const std::string { const Ogre::String }; 
 

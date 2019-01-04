@@ -15,6 +15,7 @@
  */
 
 #include <errno.h>
+#include <memory>
 #include <stdexcept>
 
 #include "AiSubsystem.h"
@@ -37,45 +38,48 @@
 
 void startupRl(bool developerMode, const Ogre::String& module, const Ogre::String& executable)
 {
-    rl::CoreSubsystem* core = NULL;
-    rl::RulesSubsystem* rules = NULL;
-    rl::AiSubsystem* ai = NULL;
-    rl::UiSubsystem* ui = NULL;
-    rl::ScriptSubsystem* script = NULL;
-    rl::Logger* logger = NULL;
+    std::unique_ptr<rl::CoreSubsystem> core;
+    std::unique_ptr<rl::RulesSubsystem> rules;
+    std::unique_ptr<rl::AiSubsystem> ai;
+    std::unique_ptr<rl::UiSubsystem> ui;
+    std::unique_ptr<rl::ScriptSubsystem> script;
+    std::unique_ptr<rl::Logger> logger;
+    std::unique_ptr<rl::ConfigurationManager> configurationManager;
 
 #ifndef _DEBUG
     try
     {
 #endif // #ifndef _DEBUG
-        rl::ConfigurationManager::getSingleton().setExecutable(executable);
-        rl::ConfigurationManager::getSingleton().loadConfig();
+        configurationManager = std::make_unique<rl::ConfigurationManager>();
 
-        Ogre::String logDir = rl::ConfigurationManager::getSingleton().getRastullahLogDirectory();
-        Ogre::String ogreLogFile = rl::ConfigurationManager::getSingleton().getOgreLogFile();
-        Ogre::String rlLogFile = rl::ConfigurationManager::getSingleton().getRastullahLogFile();
+        configurationManager->setExecutable(executable);
+        configurationManager->loadConfig();
 
-        logger = new rl::Logger(logDir, ogreLogFile, rlLogFile);
+        Ogre::String logDir = configurationManager->getRastullahLogDirectory();
+        Ogre::String ogreLogFile = configurationManager->getOgreLogFile();
+        Ogre::String rlLogFile = configurationManager->getRastullahLogFile();
+
+        logger = std::make_unique<rl::Logger>(logDir, ogreLogFile, rlLogFile);
         // @todo in ConfigDatei auslagern/ oder auch Parameter
 
-        rl::Logger::getSingleton().setLogDetail(rl::ConfigurationManager::getSingleton().getLogLevel());
+        rl::Logger::getSingleton().setLogDetail(configurationManager->getLogLevel());
 
-        rl::ConfigurationManager::getSingleton().loadModulesConfig();
+        configurationManager->loadModulesConfig();
 
-        core = new rl::CoreSubsystem();
+        core = std::make_unique<rl::CoreSubsystem>();
         core->setDeveloperMode(developerMode);
         LOG_MESSAGE_SHORT("CoreSubsystem gestartet");
 
-        rules = new rl::RulesSubsystem();
+        rules = std::make_unique<rl::RulesSubsystem>();
         LOG_MESSAGE_SHORT("RulesSubsystem gestartet");
 
-        ai = new rl::AiSubsystem();
+        ai = std::make_unique<rl::AiSubsystem>();
         LOG_MESSAGE_SHORT("AiSubsystem gestartet");
 
-        ui = new rl::UiSubsystem();
+        ui = std::make_unique<rl::UiSubsystem>();
         LOG_MESSAGE_SHORT("UiSubsystem gestartet");
 
-        script = new rl::ScriptSubsystem();
+        script = std::make_unique<rl::ScriptSubsystem>();
         LOG_MESSAGE_SHORT("ScriptSubsystem gestartet");
 
         LOG_MESSAGE_SHORT("Starte...");
@@ -123,15 +127,8 @@ void startupRl(bool developerMode, const Ogre::String& module, const Ogre::Strin
     {
 #endif // #ifndef _DEBUG
        // Save the configuration to disk
-        rl::ConfigurationManager::getSingleton().saveConfig();
+        configurationManager->saveConfig();
         LOG_MESSAGE_SHORT("Configuration file saved");
-
-        delete script;
-        delete ui;
-        delete ai;
-        delete rules;
-        delete core;
-        delete logger;
 #ifndef _DEBUG
     }
     catch (Ogre::Exception& oe)

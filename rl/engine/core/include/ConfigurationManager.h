@@ -43,6 +43,15 @@ namespace rl
     class _RlCoreExport ConfigurationManager : public Ogre::Singleton<ConfigurationManager>
     {
     public:
+        /**
+         * Constructs a new ConfigurationManager object.
+         *
+         * Sets the name for the Ogre, Rastullah and CEGUI logfiles
+         * and the Rastullah configuration file. The path
+         * where configuration files might be reside is also set.
+         */
+        ConfigurationManager();
+
         ~ConfigurationManager();
 
         /**
@@ -220,15 +229,6 @@ namespace rl
         const Ogre::String& getExecutablePath() const;
 
     private:
-        /**
-         * Constructs a new ConfigurationManager object.
-         *
-         * Sets the name for the Ogre, Rastullah and CEGUI logfiles
-         * and the Rastullah configuration file. The path
-         * where configuration files might be reside is also set.
-         */
-        ConfigurationManager();
-
         /**
          * Sets the path where configuration files may reside
          * based on the operating system.

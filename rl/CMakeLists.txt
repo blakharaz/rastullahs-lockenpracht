@@ -55,4 +55,6 @@ SET(DATADIRNAME "rastullah" CACHE STRING "change the name of the directory for t
 ADD_SUBDIRECTORY(engine)
 #ADD_SUBDIRECTORY(plugins)
 
+set(CMAKE_CXX_STANDARD 14)
+
 PRINT_ENABLED_FEATURES()
